@@ -6,6 +6,8 @@ namespace Jtl\Connector\Core\Rpc;
 
 use JMS\Serializer\Annotation as Serializer;
 use Jtl\Connector\Core\Exception\RpcException;
+use RuntimeException;
+use Throwable;
 
 /**
  * Rpc Error
@@ -40,17 +42,19 @@ class Error
     public mixed $data = null;
 
     /**
-     * @param \Throwable  $exception
+     * @param Throwable   $exception
      * @param string|null $additionalMessage
      *
      * @return string
-     * @throws \RuntimeException
+     * @throws RuntimeException
+     * @throws Throwable
      */
-    public static function createDataFromException(\Throwable $exception, ?string $additionalMessage = null): string
+    public static function createDataFromException(Throwable $exception, ?string $additionalMessage = null): string
     {
         $lastSlashPos = \strrpos($exception->getFile(), '/');
         if ($lastSlashPos === false) {
-            throw new \RuntimeException('error while parsing...');
+            \error_log("Error occured but could not be handled: error while parsing...", 4);
+            throw $exception;
         }
 
         $file = \sprintf('...%s', \substr($exception->getFile(), $lastSlashPos));
