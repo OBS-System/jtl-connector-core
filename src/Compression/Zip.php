@@ -51,6 +51,7 @@ class Zip
                     break;
                 }
 
+                /* ZIP Bomben Prüfung deaktiviert
                 // Images won't reach a compression ratio this high
                 if ($size / $compSize > 100) {
                     $isBomb = true;
@@ -61,6 +62,7 @@ class Zip
                     $isBomb = true;
                     break;
                 }
+                */
 
                 $index++;
             }
