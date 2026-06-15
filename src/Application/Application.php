@@ -375,6 +375,7 @@ class Application
             if (\is_numeric($code = $ex->getCode())) {
                 $codeInt = (int)$code;
             } else {
+                throw $ex;
                 throw new \RuntimeException('exception code must be numeric.');
             }
             $error = (new Error())
